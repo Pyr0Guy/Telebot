@@ -4,6 +4,7 @@ from telebot import types
 from choice import adminButton, employeeButton, adminAuth
 from base import registerUser, showUsers
 from admin import addUser
+from base import vabalabda
 
 #Токен
 with open(".env", "r") as f:
@@ -84,11 +85,23 @@ def admin_showUsers(message):
 
 	bot.register_next_step_handler(msg, admin_tools)
 
+#Инструменты пользователя
 def user_reg(message):
 	try:
-		print("lol")
+		msg = bot.send_message(message.chat.id, "Введите персональный код: ")
+		id = message.text
+		if vabalabda(id) == 1: 
+			msg = bot.send_message(message.chat.id, "Доступ получен")
+			bot.register_next_step_handler(msg, user)
+		else:
+			msg = bot.send_message(message.chat.id, "Неверный персональный код ")
+			bot.register_next_step_handler(msg, start)
+
 	except Exception as e:
-		bot.reply_to(message, 'Не сработало')	
+		bot.reply_to(message, 'Не сработало')
+
+def user(message): pass
+
 
 bot.enable_save_next_step_handlers(delay=2)
 bot.load_next_step_handlers()

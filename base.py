@@ -26,6 +26,11 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		result = cur.fetchall()
 		return result
 
+	def vabalabda(id):
+		cur.execute("SELECT count(userid) FROM users userid = id")
+		result = cur.fetchall()
+		return result
+
 	def getIds():
 		cur.execute("SELECT userid FROM users")
 		ids = []
