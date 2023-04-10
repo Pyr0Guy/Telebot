@@ -21,5 +21,4 @@ def addUser(name, group):
 	Имя: {name}
 
 	"""
-
-addUser("fdsfsd", "employee")
+#addUser("fdsfsd", "employee")

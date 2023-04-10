@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser
+from base import registerUser, showUsers
 from admin import addUser
 
 #Токен
@@ -54,7 +54,7 @@ def admin_reg(message):
 #Иструменты админа
 def admin_tools(message):
 	buttonAdmin = types.ReplyKeyboardMarkup()
-	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Выход'))
+	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
 
 	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
 	bot.register_next_step_handler(msg, admin_answer)
@@ -63,6 +63,9 @@ def admin_answer(message):
 	if(message.text == "Добавить сотрудника"):
 		msg = bot.send_message(message.chat.id, "Введите имя")
 		bot.register_next_step_handler(msg, admin_addUser)
+	elif(message.text == "Проверить сотрудников"):
+		msg = bot.send_message(message.chat.id, "Вот")
+		bot.register_next_step_handler(msg, admin_showUsers)
 	else:
 		msg = bot.send_message(message.chat.id, "Пока")
 		bot.register_next_step_handler(msg, start)
@@ -76,6 +79,10 @@ def admin_addUser(message):
 	#except Exception as e:
 	#	msg = bot.reply_to(message, 'Не сработало')
 	#	bot.register_next_step_handler(msg, admin_tools)
+
+def admin_showUsers(message):
+	msg = bot.send_message(message.chat.id, showUsers())
+	bot.register_next_step_handler(msg, admin_tools)
 
 def user_reg(message):
 	try:
