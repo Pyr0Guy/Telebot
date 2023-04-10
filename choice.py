@@ -1,3 +1,5 @@
+from base import getIds
+
 userGroup = None
 tryes = 0
 def adminButton():
@@ -13,6 +15,7 @@ def adminAuth(password):
 def employeeButton():
 	return "Введите персональный код: "
 
-def employeeAuth():
-	pass
-
+def employeeAuth(id):
+	if id in getIds():
+		userGroup = "emplotee"
+		return "Добро пожаловать"
