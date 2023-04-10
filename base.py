@@ -12,9 +12,13 @@ with sq.connect("Base.db") as con:
 		)""")
 
 
-	def registerUser(Userid, Name, Group Progress=0,):
-		params = (Userid, Name, Group, Progress)
-		cur.execute("INSERT INTO users VALUES (?,?,?,?)", params)
-		pass
+	def registerUser(Userid, Name, Group, Progress=0):
+		params = (Userid, Name, Group, Progress, None)
+		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", params)
 
-#registerUser(12 ,"fdsfshfghf", "employee", 0)
+	def addDescription(Text, Userid):
+		params = (Text, Userid)
+		cur.execute("UPDATE users SET description=? WHERE userid=?", params)
+
+#registerUser(12 ,"fdjsfshfghf", "employee", 0)
+#addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
