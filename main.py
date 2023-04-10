@@ -2,12 +2,16 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
+from base import registerUser
+from admin import addUser
 
 #Токен
 with open(".env", "r") as f:
     token = f.read()
 
 bot = tb.TeleBot(token)
+
+inAdmin = False
 
 #При вводе команды старт отображать кнопки
 @bot.message_handler(commands=["start"])
@@ -20,7 +24,7 @@ def start(message):
 
 	bot.register_next_step_handler(msg, user_answer)
 
-
+#Получаем ответ от чувачка
 def user_answer(message):
 	if(message.text == "Начать как администратор"):
 		msg = bot.send_message(message.chat.id, adminButton())
@@ -29,17 +33,17 @@ def user_answer(message):
 		msg = bot.send_message(message.chat.id, employeeButton())
 		bot.register_next_step_handler(msg, user_reg)
 	else:
-		msg = bot.send_message(message.chat.id, "1488")
+		msg = bot.send_message(message.chat.id, "Неправильно")
 		bot.register_next_step_handler(msg, start)
 
-
+#Вводим крутой пароль
 def admin_reg(message):
 	try:
 		password = message.text
 
 		if adminAuth(password) == "Пароль не правильный":
 			msg = bot.send_message(message.chat.id, adminAuth(password))
-			bot.register_next_step_handler(msg, admin_tools)
+			bot.register_next_step_handler(msg, start)
 		elif adminAuth(password) == "Добро пожаловать":
 			msg = bot.send_message(message.chat.id, adminAuth(password))
 			bot.register_next_step_handler(msg, admin_tools)
@@ -47,9 +51,34 @@ def admin_reg(message):
 	except Exception as e:
 		bot.reply_to(message, 'Не сработало')
 
+#Иструменты админа
+def admin_tools(message):
+	buttonAdmin = types.ReplyKeyboardMarkup()
+	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Выход'))
+
+	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
+	bot.register_next_step_handler(msg, admin_answer)
+
+def admin_answer(message):
+	if(message.text == "Добавить сотрудника"):
+		msg = bot.send_message(message.chat.id, "Введите имя")
+		bot.register_next_step_handler(msg, admin_addUser)
+	else:
+		msg = bot.send_message(message.chat.id, "Пока")
+		bot.register_next_step_handler(msg, start)
+
+def admin_addUser(message):
+	try:
+		name = message.text
+		addUser(name, 1)
+		msg = bot.reply_to(message, 'Complete')
+        bot.register_next_step_handler(msg, admin_tools)
+	except Exception as e:
+		bot.reply_to(message, 'Не сработало')
+
 def user_reg(message):
 	try:
-
+		print("lol")
 	except Exception as e:
 		bot.reply_to(message, 'Не сработало')	
 
