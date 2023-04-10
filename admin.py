@@ -1,5 +1,6 @@
 from base import registerUser
 from base import showUsers
+from base import addDescription
 from random import randint
 
 def addUserButton():
