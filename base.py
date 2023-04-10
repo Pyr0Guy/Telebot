@@ -12,7 +12,8 @@ with sq.connect("Base.db") as con:
 
 
 	def registerUser(Userid, Name, Group, Progress=0):
-		cur.execute(f"INSERT INTO users (userid, name, group_, progress) VALUES({Userid}, {Name}, {Group}, {Progress})")
+		params = (Userid, Name, Group, Progress)
+		cur.execute("INSERT INTO users VALUES (?,?,?,?)", params)
 		pass
 
-#registerUser(3434, "fdsfshfghf", "employee")
+registerUser(12 ,"fdsfshfghf", "employee", 0)
