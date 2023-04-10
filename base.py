@@ -1,6 +1,6 @@
 import sqlite3 as sq
 
-with sq.connect("Base.db", check_same_thread=False) as con:
+with sq.connect("Base.db") as con:
 	cur = con.cursor()
 
 	cur.execute("""CREATE TABLE IF NOT EXISTS users (
@@ -15,6 +15,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 	def registerUser(Userid, Name, Group, Progress=0):
 		params = (Userid, Name, Group, Progress, None)
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", params)
+		return Userid
 
 	def addDescription(Text, Userid):
 		params = (Text, Userid)
