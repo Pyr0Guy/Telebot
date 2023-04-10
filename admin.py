@@ -7,6 +7,10 @@ def deleteUserButton(): pass
 
 def showUserData(): pass
 
+def createAnnounse(): pass
+
+def chatWithUser(): pass
+
 
 def addUser(userid, name, group):
 	registerUser(userid, name, group)
