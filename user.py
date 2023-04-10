@@ -7,4 +7,3 @@ def beginQuest(): pass
 def showGuideBook():
 	return ""
 
-def addDescription(): pass
