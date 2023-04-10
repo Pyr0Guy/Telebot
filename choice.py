@@ -17,5 +17,5 @@ def employeeButton():
 
 def employeeAuth(id):
 	if id in getIds():
-		userGroup = "emplotee"
+		userGroup = "employee"
 		return "Добро пожаловать"
