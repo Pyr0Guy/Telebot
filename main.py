@@ -29,7 +29,7 @@ def user_answer(message):
 		msg = bot.send_message(message.chat.id, employeeButton())
 		bot.register_next_step_handler(msg, user_reg)
 	else:
-		msg = bot.send_message(message.chat.id, "Неправильно")
+		msg = bot.send_message(message.chat.id, "1488")
 		bot.register_next_step_handler(msg, start)
 
 
