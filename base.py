@@ -7,13 +7,14 @@ with sq.connect("Base.db") as con:
 		userid INTEGER NOT NULL,
 		name TEXT NOT NULL,
 		group_ TEXT NOT NULL,
-		progress INTEGER DEFAULT 0
+		progress INTEGER DEFAULT 0,
+		description TEXT
 		)""")
 
 
-	def registerUser(Userid, Name, Group, Progress=0):
+	def registerUser(Userid, Name, Group Progress=0,):
 		params = (Userid, Name, Group, Progress)
 		cur.execute("INSERT INTO users VALUES (?,?,?,?)", params)
 		pass
 
-registerUser(12 ,"fdsfshfghf", "employee", 0)
+#registerUser(12 ,"fdsfshfghf", "employee", 0)
