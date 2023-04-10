@@ -34,7 +34,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 			ids.append(res[i][0])
 		return ids
 
-#registerUser(12 ,"fdjsfshfghf", "employee", 0)
+		
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
 #print(showUsers())
 #print(getIds())

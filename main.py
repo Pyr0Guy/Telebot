@@ -71,17 +71,17 @@ def admin_answer(message):
 		bot.register_next_step_handler(msg, start)
 
 def admin_addUser(message):
-	#try:
 	name = message.text
 	addUser(name, "employee")
 	msg = bot.reply_to(message, 'Complete')
 	bot.register_next_step_handler(msg, admin_tools)
-	#except Exception as e:
-	#	msg = bot.reply_to(message, 'Не сработало')
-	#	bot.register_next_step_handler(msg, admin_tools)
 
 def admin_showUsers(message):
-	msg = bot.send_message(message.chat.id, showUsers())
+	users = [showUsers()]
+	print(users)
+	for i in range(len(showUsers())):
+		msg = bot.send_message(message.chat.id, users[0][i])
+
 	bot.register_next_step_handler(msg, admin_tools)
 
 def user_reg(message):
