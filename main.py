@@ -17,8 +17,10 @@ keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=False, one_tim
 def start_message(message):
 
 	#Сами кнопки
-	user  = types.KeyboardButton(text='Начать как сотрудник')
-	admin = types.KeyboardButton(text='Начать как администратор')
+	buttonLogin = types.ReplyKeyboardMarkup()
+	buttonLogin.add(types.KeyboardButton('Начать как сотрудник'), types.KeyboardButton('Начать как администратор'))
+	#user  = types.KeyboardButton(text='Начать как сотрудник')
+	#admin = types.KeyboardButton(text='Начать как администратор')
 
 	keyboard.row(user, admin)
 	#keyboard.add(user)
