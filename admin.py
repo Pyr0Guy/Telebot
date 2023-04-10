@@ -14,7 +14,7 @@ def chatWithUser(): pass
 
 
 def addUser(name, group):
-	registerUser(randint(00000001, 99999999), name, group)
+	registerUser(randint(1, 99999999), name, group)
 	return f"""
 	Пользователь зарегестрирован
 	id: {userid}
