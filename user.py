@@ -1,7 +1,9 @@
 from base import addDescription
 from base import showUsers
+from choice import employeeButton
 
-def beginQuestButton(): pass
+def beginQuestButton(): 
+	return employeeButton()
 
 def beginQuest(): pass
 
