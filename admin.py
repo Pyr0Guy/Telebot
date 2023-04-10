@@ -1,4 +1,5 @@
 from base import registerUser
+from base import showUsers
 from random import randint
 
 def addUserButton():
@@ -6,7 +7,7 @@ def addUserButton():
 
 def deleteUserButton(): pass
 
-def showUserData(): pass
+def showUsersData(): pass
 
 def createAnnounse(): pass
 
