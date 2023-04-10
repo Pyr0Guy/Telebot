@@ -7,3 +7,5 @@ def beginQuest(): pass
 def showGuideBook():
 	return ""
 
+def showColleges():
+	pass
