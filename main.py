@@ -2,9 +2,8 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers
+from base import registerUser, showUsers, vabalabda
 from admin import addUser
-from base import vabalabda
 
 #Токен
 with open(".env", "r") as f:
