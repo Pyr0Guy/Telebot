@@ -5,7 +5,10 @@ def adminButton():
 	return "Введите пароль"
 
 def adminAuth(password):
-	if password == "123":
+	if tryes >= 3:
+		return "Доступ заблокирован"
+
+	elif password == "123":
 		userGroup = "admin"
 		return "Добро пожаловать"
 	else:
