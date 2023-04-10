@@ -1,7 +1,7 @@
 import os 
 import telebot as tb
 from telebot import types
-from choice import adminButton, adminAuth
+from choice import adminButton, employeeButton, adminAuth
 
 #Токен
 with open(".env", "r") as f:
@@ -9,40 +9,51 @@ with open(".env", "r") as f:
 
 bot = tb.TeleBot(token)
 
-#Создаем клавиатуру с кнопками
-keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=False, one_time_keyboard=True)
-
 #При вводе команды старт отображать кнопки
-@bot.message_handler(commands=['start'])
-def start_message(message):
-
+@bot.message_handler(commands=["start"])
+def start(message):
 	#Сами кнопки
 	buttonLogin = types.ReplyKeyboardMarkup()
 	buttonLogin.add(types.KeyboardButton('Начать как сотрудник'), types.KeyboardButton('Начать как администратор'))
-	#user  = types.KeyboardButton(text='Начать как сотрудник')
-	#admin = types.KeyboardButton(text='Начать как администратор')
 
-	keyboard.row(user, admin)
-	#keyboard.add(user)
-	#keyboard.add(admin)
+	msg = bot.send_message(message.chat.id, 'Выберете пользователя', reply_markup=buttonLogin)
 
-	bot.send_message(message.chat.id, 'Выберете пользователя', reply_markup=keyboard)
+	bot.register_next_step_handler(msg, user_answer)
 
-#Отслеживаем каждое сообщение пользователя 
-@bot.message_handler(content_types=['text'])
-def echo(message):
-    text = message.text
-    user = message.chat.id
 
-    if(text == "Начать как администратор"):
-    	bot.register_next_step_handler(text, process_name_step)
+def user_answer(message):
+	if(message.text == "Начать как администратор"):
+		msg = bot.send_message(message.chat.id, adminButton())
+		bot.register_next_step_handler(msg, admin_reg)
+	elif(message.text == "Начать как сотрудник"):
+		msg = bot.send_message(message.chat.id, employeeButton())
+		bot.register_next_step_handler(msg, user_reg)
+	else:
+		msg = bot.send_message(message.chat.id, "Неправильно")
+		bot.register_next_step_handler(msg, start)
 
-def process_name_step(message):
+
+def admin_reg(message):
 	try:
 		password = message.text
-		bot.send_message(message,adminAuth(password), reply_markup=keyboard)
-	except Exception as e:
-		bot.reply_to(message, 'oooops')
 
+		if adminAuth(password) == "Пароль не правильный":
+			msg = bot.send_message(message.chat.id, adminAuth(password))
+			bot.register_next_step_handler(msg, admin_tools)
+		elif adminAuth(password) == "Добро пожаловать":
+			msg = bot.send_message(message.chat.id, adminAuth(password))
+			bot.register_next_step_handler(msg, admin_tools)
+
+	except Exception as e:
+		bot.reply_to(message, 'Не сработало')
+
+def user_reg(message):
+	try:
+
+	except Exception as e:
+		bot.reply_to(message, 'Не сработало')	
+
+bot.enable_save_next_step_handlers(delay=2)
+bot.load_next_step_handlers()
 #Врубаем бота
 bot.infinity_polling()
