@@ -21,11 +21,19 @@ with sq.connect("Base.db") as con:
 		cur.execute("UPDATE users SET description=? WHERE userid=?", params)
 
 	def showUsers():
-		cur.execute("SELECT * FROM users")
+		cur.execute("SELECT name, group_, description FROM users")
 		result = cur.fetchall()
 		return result
+
+	def getIds():
+		cur.execute("SELECT userid FROM users")
+		ids = []
+		res = cur.fetchall()
+		for i in range(len(res)):
+			ids.append(res[i][0])
+		return ids
 
 #registerUser(12 ,"fdjsfshfghf", "employee", 0)
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
 #print(showUsers())
-
+#print(getIds())
