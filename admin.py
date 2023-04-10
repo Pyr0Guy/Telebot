@@ -1,4 +1,5 @@
 from base import registerUser
+from random import randint
 
 def addUserButton():
 	return "Введите данные: "
@@ -12,8 +13,8 @@ def createAnnounse(): pass
 def chatWithUser(): pass
 
 
-def addUser(userid, name, group):
-	registerUser(userid, name, group)
+def addUser(name, group):
+	registerUser(randint(00000001, 99999999), name, group)
 	return f"""
 	Пользователь зарегестрирован
 	id: {userid}
