@@ -19,7 +19,6 @@ def addUser(name, group):
 	registerUser(randint(10000000, 99999999), name, group)
 	return f"""
 	Пользователь зарегестрирован
-	id: {userid}
 	Имя: {name}
 
 	"""
