@@ -135,6 +135,9 @@ def user_answer2(message):
 	elif(message.text == "О компании"):
 		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании:")
 		bot.register_next_step_handler(msg, user_showСompan)
+	else:
+		msg = bot.send_message(message.chat.id, "bb")
+		bot.register_next_step_handler(msg, start)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, "Работай")
