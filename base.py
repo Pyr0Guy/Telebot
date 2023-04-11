@@ -28,7 +28,11 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 
 	def vabalabda(id):
 		params = (id)
+<<<<<<< Updated upstream
 		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", [params])
+=======
+		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", (params,))
+>>>>>>> Stashed changes
 		result = cur.fetchall()
 		return result
 
@@ -54,7 +58,17 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		params = (Userid)
 		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)
 
+	def showUsersNAME(name):
+		params = (name)
+		cur.execute("SELECT name, group_, description FROM users WHERE name = ?", [params])
+		result = cur.fetchall()
+		return f"""
+		Имя: {name}
 		
+	"""
+
+
+registerUser(2, "boobs", "man")
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
 #print(showUsers())
 #print(getIds())
