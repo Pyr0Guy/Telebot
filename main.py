@@ -7,10 +7,9 @@ from admin import addUser
 from user import showGuideBook
 
 #Токен
-with open(".env", "r") as f:
-    token = f.read()
 
-bot = tb.TeleBot(token)
+bot = tb.TeleBot("5973367934:AAH5QSC-UkZDrueAg3p0a9OoowuONWcaUko")
+
 
 inAdmin = False
 
@@ -127,17 +126,20 @@ def user_answer2(message):
 	elif(message.text == "Посмотреть коллег"):
 		print("Проверка сотрудников")
 		msg = bot.send_message(message.chat.id, "Вот информация о ваших коллегах:")
-		users = showUsers()
-		print(users)
-		for i in range(len(showUsers())):
-			msg = bot.send_message(message.chat.id, users[i])
-		start(message)
+		bot.register_next_step_handler(msg, user_showUsers)
+		
 	elif(message.text == "О компании"):
 		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании:")
 		bot.register_next_step_handler(msg, user_showСompan)
 	else:
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
+
+def settings(message):
+	button = types.InlineKeyboardMarkup()
+	button.add(types.InlineKeyboardButton('Обучение профессии'), types.InlineKeyboardButton('Посмотреть коллег')) 
+	msg = bot.send_message(message.chat.id, "Вот возможные настройки:", reply_markup = button)
+	bot.register_next_step_handler(msg, user_answer2)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, "Работай")
