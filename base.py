@@ -28,11 +28,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 
 	def vabalabda(id):
 		params = (id)
-<<<<<<< Updated upstream
 		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", [params])
-=======
-		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", (params,))
->>>>>>> Stashed changes
 		result = cur.fetchall()
 		return result
 
