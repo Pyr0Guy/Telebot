@@ -2,9 +2,6 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda, showUsersNAME, addDescription
-from admin import addUser
-from user import userComp, userWork1, userWork2
 from base import registerUser, showUsers, vabalabda, showUsersNAME
 from admin import addUser, companyInfo, userText1, userText2, userText3
 from user import showGuideBook
@@ -103,7 +100,7 @@ def user_reg(message):
 	if vabalabda(message.text) == [(1,)]: 
 		msg = bot.send_message(message.chat.id, "Доступ получен")
 		buttonUser = types.ReplyKeyboardMarkup()
-		buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Настройки'), types.KeyboardButton('Выход')) 
+		buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Выход')) 
 
 		msg = bot.send_message(message.chat.id, "Выберете кнопку", reply_markup=buttonUser)
 		bot.register_next_step_handler(msg, user_answer2)
@@ -114,12 +111,12 @@ def user_reg(message):
 	#except Exception as e:
 	#	bot.reply_to(message, 'Не сработало')
 
-#def user_tools(message): 
-	#buttonUser = types.ReplyKeyboardMarkup()
-	#buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Настройки'), types.KeyboardButton('Выход')) 
+def user_tools(message): 
+	buttonUser = types.ReplyKeyboardMarkup()
+	buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Выход')) 
 	#buttonUser.add(types.KeyboardButton('О компании'), types.KeyboardButton('Выход')) 
-	#msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать: ", reply_markup=buttonUser)
-	#bot.register_next_step_handler(msg, user_answer2)
+	msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать: ", reply_markup=buttonUser)
+	bot.register_next_step_handler(msg, user_answer2)
 
 def user_answer2(message):
 	if(message.text == "Обучение профессии"):
@@ -130,45 +127,21 @@ def user_answer2(message):
 		print("Проверка сотрудников")
 		msg = bot.send_message(message.chat.id, "Вот информация о ваших коллегах:")
 		bot.register_next_step_handler(msg, user_showUsers)
+		
 	elif(message.text == "О компании"):
 		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании:")
 		bot.register_next_step_handler(msg, user_showСompan)
-	elif(message.text == "Настройки"):
-		msg = bot.send_message(message.chat.id, "Вот возможные настройки:")
-		bot.register_next_step_handler(msg, settings)
 	else:
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
 def settings(message):
-	buttonUser = types.ReplyKeyboardMarkup()
-	buttonUser.add(types.KeyboardButton('Изменить информацию о себе'), types.KeyboardButton('Выход')) 
-
-	if(message.text == "Изменить информацию о себе"):
-		msg = bot.send_message(message.chat.id, "Впешите свой id:")
-		id = message.text
-		msg = bot.send_message(message.chat.id, "Теперь введите новый текст:")
-		text = message.text
-		addDescription(text, id)
-		msg = bot.send_message(message.chat.id, "Текст успешно введен:")
-		bot.register_next_step_handler(msg, user_answer2)
-	else:
-		bot.register_next_step_handler(msg, user_answer2)
-	
+	button = types.InlineKeyboardMarkup()
+	button.add(types.InlineKeyboardButton('Обучение профессии'), types.InlineKeyboardButton('Посмотреть коллег')) 
+	msg = bot.send_message(message.chat.id, "Вот возможные настройки:", reply_markup = button)
+	bot.register_next_step_handler(msg, user_answer2)
 
 def user_GuideBook(message):
-<<<<<<< Updated upstream
-	msg = bot.send_message(message.chat.id, userWork1())
-	bot.register_next_step_handler(msg, user_GuideBook2)
-
-def user_GuideBook2(message):
-	msg = bot.send_message(message.chat.id, userWork2())
-	bot.register_next_step_handler(msg, user_reg)
-
-def user_GuideBook3(message):
-	msg = bot.send_message(message.chat.id, "")
-	bot.register_next_step_handler(msg, user_reg)
-=======
 	msg = bot.send_message(message.chat.id, userText1())
 	bot.register_next_step_handler(msg, user_GuideBook2)
 
@@ -179,7 +152,6 @@ def user_GuideBook2(message):
 def user_GuideBook2(message):
 	msg = bot.send_message(message.chat.id, userText3())
 	bot.register_next_step_handler(msg, start)
->>>>>>> Stashed changes
 
 def user_showUsers(message):
 	users = showUsers()
@@ -190,13 +162,8 @@ def user_showUsers(message):
 	bot.register_next_step_handler(msg, user_question)
 
 def user_showСompan(message):
-<<<<<<< Updated upstream
-	msg = bot.send_message(message.chat.id, userComp())
-	bot.register_next_step_handler(msg, user_reg)
-=======
 	msg = bot.send_message(message.chat.id, companyInfo())
 	bot.register_next_step_handler(msg, user_tools)
->>>>>>> Stashed changes
 
 def user_question(message):
 	buttonUser = types.ReplyKeyboardMarkup()
@@ -209,12 +176,12 @@ def user_check(message):
 		msg = bot.send_message(message.chat.id, "Введите имя пользователя о котором хотите получить информацию: ")
 		bot.register_next_step_handler(msg, user_check_other_user)
 	else:
-		bot.register_next_step_handler(msg, user_reg)
+		bot.register_next_step_handler(msg, user_tools)
 
 def user_check_other_user(message):
 	name = message.text
 	msg = bot.send_message(message.chat.id, showUsersNAME(name))
-	bot.register_next_step_handler(msg, user_reg)
+	bot.register_next_step_handler(msg, user_tools)
 
 bot.enable_save_next_step_handlers(delay=12)
 bot.load_next_step_handlers()
