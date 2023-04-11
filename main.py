@@ -157,7 +157,6 @@ def settings(message):
 	
 
 def user_GuideBook(message):
-<<<<<<< Updated upstream
 	msg = bot.send_message(message.chat.id, userWork1())
 	bot.register_next_step_handler(msg, user_GuideBook2)
 
@@ -166,20 +165,8 @@ def user_GuideBook2(message):
 	bot.register_next_step_handler(msg, user_reg)
 
 def user_GuideBook3(message):
-	msg = bot.send_message(message.chat.id, "")
-	bot.register_next_step_handler(msg, user_reg)
-=======
-	msg = bot.send_message(message.chat.id, userText1())
-	bot.register_next_step_handler(msg, user_GuideBook2)
-
-def user_GuideBook2(message):
-	msg = bot.send_message(message.chat.id, userText2())
-	bot.register_next_step_handler(msg, user_GuideBook3)
-
-def user_GuideBook2(message):
 	msg = bot.send_message(message.chat.id, userText3())
 	bot.register_next_step_handler(msg, start)
->>>>>>> Stashed changes
 
 def user_showUsers(message):
 	users = showUsers()
@@ -190,13 +177,10 @@ def user_showUsers(message):
 	bot.register_next_step_handler(msg, user_question)
 
 def user_showСompan(message):
-<<<<<<< Updated upstream
 	msg = bot.send_message(message.chat.id, userComp())
 	bot.register_next_step_handler(msg, user_reg)
-=======
 	msg = bot.send_message(message.chat.id, companyInfo())
-	bot.register_next_step_handler(msg, user_tools)
->>>>>>> Stashed changes
+	bot.register_next_step_handler(msg, start)
 
 def user_question(message):
 	buttonUser = types.ReplyKeyboardMarkup()
