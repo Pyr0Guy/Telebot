@@ -38,6 +38,10 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		for i in range(len(res)):
 			ids.append(res[i][0])
 		return ids
+	
+	def updateProgress(Userid):
+		params = (Userid)
+		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)
 
 		
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
