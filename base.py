@@ -28,7 +28,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 
 	def vabalabda(id):
 		params = (id)
-		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", params)
+		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", [params])
 		result = cur.fetchall()
 		return result
 
@@ -44,7 +44,11 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		params = (name)
 		cur.execute("SELECT name, group_, description FROM users WHERE name = ?", params)
 		result = cur.fetchall()
-		return result
+		return f"""
+		Пользователь зарегестрирован
+		Имя: {name}
+
+	"""
 
 	def updateProgress(Userid):
 		params = (Userid)
