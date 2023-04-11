@@ -149,7 +149,7 @@ def user_showUsers(message):
 def user_question(message):
 	buttonUser = types.ReplyKeyboardMarkup()
 	buttonUser.add(types.KeyboardButton('Подробная информация о пользователе'), types.KeyboardButton('Выход')) 
-	msg = bot.send-message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
+	msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
 	
 	if message.text == "Подробная информация о пользователе":
 		msg = bot.send_message(message.chat.id, "Введите имя пользователя о котором хотите получить информацию: ")
