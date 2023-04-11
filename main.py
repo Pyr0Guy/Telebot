@@ -102,10 +102,10 @@ def admin_UserDescription(): pass
 
 #Инструменты пользователя
 def user_reg(message):
+	users = showUsers()
 	try:
 		msg = bot.send_message(message.chat.id, "Введите персональный код: ")
-		id = message.text
-		if vabalabda(id) == 1: 
+		if vabalabda(message.text) == 1: 
 			msg = bot.send_message(message.chat.id, "Доступ получен")
 			bot.register_next_step_handler(msg, user_tools)
 		else:
@@ -158,7 +158,7 @@ def user_question(message):
 
 def user_showСompany(): pass
 
-bot.enable_save_next_step_handlers(delay=2)
+bot.enable_save_next_step_handlers(delay=8)
 bot.load_next_step_handlers()
 #Врубаем бота
-bot.infinity_polling()
+bot.polling()

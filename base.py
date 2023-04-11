@@ -8,7 +8,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		name TEXT NOT NULL,
 		group_ TEXT NOT NULL,
 		progress INTEGER DEFAULT 0,
-		description TEXT
+		description TEXT NOT NULL
 		)""")
 
 
@@ -22,7 +22,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		cur.execute("UPDATE users SET description=? WHERE userid=?", params)
 
 	def showUsers():
-		cur.execute("SELECT name, group_, description FROM users")
+		cur.execute("SELECT name, userid, group_, description FROM users")
 		result = cur.fetchall()
 		return result
 
