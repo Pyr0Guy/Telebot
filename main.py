@@ -4,6 +4,7 @@ from telebot import types
 from choice import adminButton, employeeButton, adminAuth
 from base import registerUser, showUsers, vabalabda
 from admin import addUser
+from user import showGuideBook, showColleges
 
 #Токен
 with open(".env", "r") as f:
@@ -80,9 +81,23 @@ def admin_showUsers(message):
 	users = [showUsers()]
 	print(users)
 	for i in range(len(showUsers())):
-		msg = bot.send_message(message.chat.id, users[0][i])
+		msg = bot.send_message(message.chat.id, users[0][i])    #нужно ещё сделать вывод group и userid для администратора 
 
-	bot.register_next_step_handler(msg, admin_tools)
+	bot.register_next_step_handler(msg, user_question)
+
+def user_question(message):
+	buttonUser = types.ReplyKeyboardMarkup()
+	buttonUser.add(types.KeyboardButton('Подробная информация о пользователе'), types.KeyboardButton('Выход')) 
+	msg = bot.send-message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
+	
+	if message.text == "Подробная информация о пользователе":
+		msg = bot.send-message(message.chat.id, "Введите им пользователя: ")
+		bot.register_next_step_handler(msg, admin_UserDescription)
+	else:
+		bot.register_next_step_handler(msg, admin_tools)
+
+def admin_UserDescription(): pass
+	# здесь нужно сделать вывод информации об указанном пользователе
 
 #Инструменты пользователя
 def user_reg(message):
@@ -91,7 +106,7 @@ def user_reg(message):
 		id = message.text
 		if vabalabda(id) == 1: 
 			msg = bot.send_message(message.chat.id, "Доступ получен")
-			bot.register_next_step_handler(msg, user)
+			bot.register_next_step_handler(msg, user_tools)
 		else:
 			msg = bot.send_message(message.chat.id, "Неверный персональный код ")
 			bot.register_next_step_handler(msg, start)
@@ -99,8 +114,48 @@ def user_reg(message):
 	except Exception as e:
 		bot.reply_to(message, 'Не сработало')
 
-def user(message): pass
+def user_tools(message): 
+	buttonUser = types.ReplyKeyboardMarkup()
+	buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег')) 
+	buttonUser.add(types.KeyboardButton('О компании'), types.KeyboardButton('Выход')) 
+	msg = bot.send-message(message.chat.id, "Выберите, что хотите сделать: ", reply_markup=buttonUser)
+	bot.register_next_step_handler(msg, user_answer)
 
+def user_answer(message): 
+	if(message.text == "Обучение профессии"):
+		msg = bot.send_message(message.chat.id, "Вот информация по вашей профессии: ")
+		bot.register_next_step_handler(msg, user_GuideBook)
+	elif(message.text == "Посмотреть коллег"):
+		msg = bot.send_message(message.chat.id, "Вот информация о ваших коллегах: ")
+		bot.register_next_step_handler(msg, user_showUsers)
+	elif(message.text == "О компании"):
+		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании: ")
+		bot.register_next_step_handler(msg, user_showСompany)
+	else:
+		msg = bot.send_message(message.chat.id, "Пока")
+		bot.register_next_step_handler(msg, start)
+
+def user_GuideBook(): pass
+
+def user_showUsers(message):
+	users = [showUsers()]
+	print(users)
+	for i in range(len(showUsers())):
+		msg = bot.send_message(message.chat.id, users[0][i])
+
+	bot.register_next_step_handler(msg, user_question)
+
+def user_question(message):
+	buttonUser = types.ReplyKeyboardMarkup()
+	buttonUser.add(types.KeyboardButton('Подробная информация о пользователе'), types.KeyboardButton('Выход')) 
+	msg = bot.send-message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
+	
+	if message.text == "Подробная информация о пользователе":
+		pass
+	else:
+		bot.register_next_step_handler(msg, user_tools)
+
+def user_showСompany(): pass
 
 bot.enable_save_next_step_handlers(delay=2)
 bot.load_next_step_handlers()
