@@ -27,7 +27,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		return result
 
 	def vabalabda(id):
-		cur.execute("SELECT count(userid) FROM users userid = id")
+		cur.execute("SELECT count(userid) FROM users WHERE userid = id")
 		result = cur.fetchall()
 		return result
 
