@@ -46,19 +46,23 @@ def admin_reg(message):
 			msg = bot.send_message(message.chat.id, adminAuth(password))
 			bot.register_next_step_handler(msg, start)
 		elif adminAuth(password) == "Добро пожаловать":
-			msg = bot.send_message(message.chat.id, adminAuth(password))
-			bot.register_next_step_handler(msg, admin_tools)
+
+			buttonAdmin = types.ReplyKeyboardMarkup()
+			buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
+
+			msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
+			bot.register_next_step_handler(msg, admin_answer)
 
 	except Exception as e:
 		bot.reply_to(message, 'Не сработало')
 
 #Иструменты админа
-def admin_tools(message):
-	buttonAdmin = types.ReplyKeyboardMarkup()
-	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
-
-	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
-	bot.register_next_step_handler(msg, admin_answer)
+#def admin_tools(message):
+#	buttonAdmin = types.ReplyKeyboardMarkup()
+#	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
+#
+#	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
+#	bot.register_next_step_handler(msg, admin_answer)
 
 def admin_answer(message):
 	if(message.text == "Добавить сотрудника"):
@@ -75,7 +79,8 @@ def admin_addUser(message):
 	name = message.text
 	sus = addUser(name, "employee")
 	msg = bot.reply_to(message, sus)
-	bot.register_next_step_handler(msg, admin_tools)
+	start(message)
+	#bot.register_next_step_handler(msg, admin_tools)
 
 def admin_showUsers(message):
 	users = showUsers()
@@ -84,7 +89,8 @@ def admin_showUsers(message):
 		for j in range(3):
 				msg = bot.send_message(message.chat.id, users[i][j])
 
-	bot.register_next_step_handler(msg, admin_tools)
+	start(message)
+#	bot.register_next_step_handler(msg, admin_reg)
 
 #Инструменты пользователя
 def user_reg(message):
@@ -94,10 +100,14 @@ def user_reg(message):
 	print(vabalabda(message.text))
 	if vabalabda(message.text) == [(1,)]: 
 		msg = bot.send_message(message.chat.id, "Доступ получен")
-		bot.register_next_step_handler(msg, user_tools)
+		buttonUser = types.ReplyKeyboardMarkup()
+		buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Выход')) 
+
+		msg = bot.send_message(message.chat.id, "Выберете кнопку", reply_markup=buttonUser)
+		bot.register_next_step_handler(msg, user_answer2)
 	else:
-		msg = bot.send_message(message.chat.id, "Неверный персональный код ")
-		bot.register_next_step_handler(msg, start)
+		bot.send_message(message.chat.id, "Неверный персональный код ")
+		start(message)
 
 	#except Exception as e:
 	#	bot.reply_to(message, 'Не сработало')
@@ -117,7 +127,11 @@ def user_answer2(message):
 	elif(message.text == "Посмотреть коллег"):
 		print("Проверка сотрудников")
 		msg = bot.send_message(message.chat.id, "Вот информация о ваших коллегах:")
-		bot.register_next_step_handler(msg, user_showUsers)
+		users = showUsers()
+		print(users)
+		for i in range(len(showUsers())):
+			msg = bot.send_message(message.chat.id, users[i])
+		start(message)
 	elif(message.text == "О компании"):
 		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании:")
 		bot.register_next_step_handler(msg, user_showСompan)
