@@ -40,6 +40,12 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 			ids.append(res[i][0])
 		return ids
 	
+	def showUsersID(id):
+		params = (id)
+		cur.execute("SELECT name, group_, description FROM users WHERE userid = ?", params)
+		result = cur.fetchall()
+		return result
+
 	def updateProgress(Userid):
 		params = (Userid)
 		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)

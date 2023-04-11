@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda
+from base import registerUser, showUsers, vabalabda, showUsersID
 from admin import addUser
 from user import showGuideBook, showColleges
 
@@ -152,7 +152,10 @@ def user_question(message):
 	msg = bot.send-message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
 	
 	if message.text == "Подробная информация о пользователе":
-		pass
+		msg = bot.send_message(message.chat.id, "Введите имя пользователя о котором хотите получить информацию: ")
+		id = message.text
+		msg = bot.send_message(message.chat.id, showUsersID(id))
+
 	else:
 		bot.register_next_step_handler(msg, user_tools)
 
