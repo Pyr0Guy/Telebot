@@ -144,21 +144,22 @@ def user_answer2(message):
 def settings(message):
 	if(message.text == "Изменить информацию о себе"):
 		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
-		a = message.text
-
-		if (vabalabda(a) == [(1,)]): 
-			msg = bot.send_message(message.chat.id, "Теперь введите текст для описания: ")
-			name = message.text
-			addDescription(name, a)
-			print(addDescription(name, a))
-			bot.register_next_step_handler(msg, settings)	
-		elif(vabalabda(a) == [(0,)]):
-			bot.send_message(message.chat.id, "Неверный персональный код ")
-			bot.register_next_step_handler(msg, settings)
-		
+		bot.register_next_step_handler(msg, settings2)
 	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
 
+def settings2(message):
+	a = message.text
+	if (vabalabda(a) == [(1,)]): 
+		msg = bot.send_message(message.chat.id, "Теперь введите текст для описания: ")
+		name = message.text
+		addDescription(name, a)
+		print(addDescription(name, a))
+		print (name)
+		bot.register_next_step_handler(msg, settings)	
+	elif(vabalabda(a) == [(0,)]):
+		bot.send_message(message.chat.id, "Неверный персональный код ")
+		bot.register_next_step_handler(msg, settings)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
