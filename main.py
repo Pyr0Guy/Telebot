@@ -148,17 +148,20 @@ def settings(message):
 		bot.register_next_step_handler(msg, user_answer2)
 
 def settings2(message, ):
-	global a
 	a = message.text
 	if (vabalabda(a) == [(1,)]): 
 		msg = bot.send_message(message.chat.id, "Введите новое описание: ")
-		name = message.text
-		addDescription(name, a)
-		print(addDescription(name, a))
-		bot.register_next_step_handler(msg, settings)
+		bot.register_next_step_handler(msg, settings3, a)
 	else:
 		bot.send_message(message.chat.id, "Неверный персональный код ")
 		bot.register_next_step_handler(msg, settings)
+
+def settings3(message, a):
+	msg = bot.send_message(message.chat.id, "Введите новое описание: ")
+	name = message.text
+	addDescription(name, a)
+	print(addDescription(name, a))
+	bot.register_next_step_handler(msg, settings)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
