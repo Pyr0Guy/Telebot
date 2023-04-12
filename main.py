@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda, showUsersGroup, addDescription, showUsersDescription
+from base import registerUser, showUsers, vabalabda, showUsersName, showUsersGroup, addDescription, showUsersDescription
 from user import userComp, userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
@@ -45,7 +45,7 @@ def admin_reg(message):
 			msg = bot.send_message(message.chat.id, adminAuth(password))
 			bot.register_next_step_handler(msg, start)
 		elif adminAuth(password) == "Добро пожаловать":
-
+			print("Администратор вошел")
 			buttonAdmin = types.ReplyKeyboardMarkup()
 			buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
 
@@ -63,7 +63,7 @@ def admin_reg(message):
 #	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
 #	bot.register_next_step_handler(msg, admin_answer)
 
-async def admin_answer(message):
+def admin_answer(message):
 	if(message.text == "Добавить сотрудника"):
 		msg = bot.send_message(message.chat.id, "Введите имя")
 		bot.register_next_step_handler(msg, admin_addUser)
@@ -95,15 +95,14 @@ def admin_showUsers(message):
 def user_reg(message):
 	#try:
 	#msg = bot.send_message(message.chat.id, "Введите персональный код: ")
-	print(vabalabda(message.text))
 	a = message.text
 	if vabalabda(a) == [(1,)]: 
 		msg = bot.send_message(message.chat.id, "Доступ получен")
 		buttonUser = types.ReplyKeyboardMarkup()
 		buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Настройки'), types.KeyboardButton('Выход')) 
-
 		msg = bot.send_message(message.chat.id, "Выберете кнопку", reply_markup=buttonUser)
-		bot.register_next_step_handler(msg, user_answer2)
+		bot.register_next_step_handler(msg, user_answer2, a)
+		print("Пользователь подключен")
 	else:
 		bot.send_message(message.chat.id, "Неверный персональный код ")
 		start(message)
@@ -119,7 +118,7 @@ def user_reg(message):
 	#msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать: ", reply_markup=buttonUser)
 	#bot.register_next_step_handler(msg, user_answer2)
 
-def user_answer2(message):
+def user_answer2(message, a):
 	if(message.text == "Обучение профессии"):
 		print("Обучение профессии")
 		msg = bot.send_message(message.chat.id, "Вот информация по вашей профессии:")
@@ -133,20 +132,23 @@ def user_answer2(message):
 		bot.register_next_step_handler(msg, user_showСompan)
 	elif(message.text == "Настройки"):
 		buttonsettings = types.ReplyKeyboardMarkup()
-		buttonsettings.add(types.KeyboardButton('Изменить информацию о себе'), types.KeyboardButton('Выход'))
+		buttonsettings.add(types.KeyboardButton('Изменить информацию о себе'), types.KeyboardButton('Выйти'))
 		msg = bot.send_message(message.chat.id, "Вот возможные настройки: ", reply_markup=buttonsettings)
-		bot.register_next_step_handler(msg, settings)
+		bot.register_next_step_handler(msg, settings, a)
 	else:
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
-def settings(message):
+def settings(message, a):
 	if(message.text == "Изменить информацию о себе"):
-		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
-		bot.register_next_step_handler(msg, settings2)
-	elif(message.text == "Выход"):
+		msg = bot.send_message(message.chat.id, "Введите новое описание: ")
+		bot.register_next_step_handler(msg, settings2, a)
+	elif(message.text == "Выйти"):
 		fsg = bot.send_message(message.chat.id, "ff ")
 		bot.register_next_step_handler(fsg, user_answer2)
+'''
+msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
+bot.register_next_step_handler(msg, settings2)
 
 def settings2(message, ):
 	a = message.text
@@ -156,8 +158,8 @@ def settings2(message, ):
 	else:
 		ssg = bot.send_message(message.chat.id, "Неверный персональный код ")
 		bot.register_next_step_handler(ssg, settings)
-
-def settings3(message, a):
+'''
+def settings2(message, a):
 	name = message.text
 	addDescription(name, a)
 	print(addDescription(name, a))
@@ -206,9 +208,10 @@ def user_check(message):
 def user_check_other_user(message):
 	name = message.text
 	#bot.send_message(message.chat.id, "Имя:", name)                  СТРОЧКА ГОВНА ЕБАНОГО НЕ РАБОТАЕТ НИХУЯ
+	bot.send_message(message.chat.id, showUsersName(name))
 	bot.send_message(message.chat.id, showUsersGroup(name))
-	bot.send_message(message.chat.id, showUsersDescription(name))
-	bot.register_next_step_handler(msg, user_reg)
+	msg = bot.send_message(message.chat.id, showUsersDescription(name))
+	#bot.register_next_step_handler(msg, user_reg)
 
 '''
 msg = bot.send_message(message.chat.id, showUsersGroup(name))

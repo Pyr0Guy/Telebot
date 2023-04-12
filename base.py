@@ -8,10 +8,9 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		name TEXT NOT NULL,
 		group_ TEXT NOT NULL,
 		progress INTEGER DEFAULT 0,
-		description TEXT NOT NULL 
+		description TEXT DEFAULT "Нет информации"
 		)""")
 
-# DEFAULT "Нет информации"
 	def registerUser(Userid, Name, Group, Progress=0):
 		params = (Userid, Name, Group, Progress, None)
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", params)
@@ -40,6 +39,12 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 			ids.append(res[i][0])
 		return ids	
 
+
+def showUsersName(name):
+	return f"""
+	Имя: {name}	
+	
+	"""
 
 def showUsersGroup(name):
 		params = (name)
