@@ -63,7 +63,7 @@ def admin_reg(message):
 #	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
 #	bot.register_next_step_handler(msg, admin_answer)
 
-def admin_answer(message):
+async def admin_answer(message):
 	if(message.text == "Добавить сотрудника"):
 		msg = bot.send_message(message.chat.id, "Введите имя")
 		bot.register_next_step_handler(msg, admin_addUser)
