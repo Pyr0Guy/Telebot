@@ -134,25 +134,24 @@ def user_answer2(message):
 		msg = bot.send_message(message.chat.id, "Вот информация о нашей компании:")
 		bot.register_next_step_handler(msg, user_showСompan)
 	elif(message.text == "Настройки"):
-		msg = bot.send_message(message.chat.id, "Вот возможные настройки:")
+		buttonsettings = types.ReplyKeyboardMarkup()
+		buttonsettings.add(types.KeyboardButton('Изменить информацию о себе'), types.KeyboardButton('Выход'))
+		msg = bot.send_message(message.chat.id, "Вот возможные настройки: ", reply_markup=buttonsettings)
 		bot.register_next_step_handler(msg, settings)
 	else:
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
 def settings(message):
-	buttonUser = types.ReplyKeyboardMarkup()
-	buttonUser.add(types.KeyboardButton('Изменить информацию о себе'), types.KeyboardButton('Выход')) 
-
 	if(message.text == "Изменить информацию о себе"):
 		msg = bot.send_message(message.chat.id, "Впешите свой id:")
 		id = message.text
 		msg = bot.send_message(message.chat.id, "Теперь введите новый текст:")
 		text = message.text
 		addDescription(text, id)
-		msg = bot.send_message(message.chat.id, "Текст успешно введен:")
+		msg = bot.send_message(message.chat.id, "Текст успешно введен")
 		bot.register_next_step_handler(msg, user_answer2)
-	else:
+	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
 	
 
