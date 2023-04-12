@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda, showUsersName, showUsersGroup, addDescription, showUsersDescription
+from base import showUsers, vabalabda, showUsersName, showUsersGroup, addDescription, showUsersDescription
 from user import userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
@@ -167,7 +167,7 @@ def user_check(message):
 	if (message.text == "Подробная информация о пользователе"):
 		usg = bot.send_message(message.chat.id, "Введите имя пользователя о котором хотите получить информацию: ")
 		bot.register_next_step_handler(usg, user_check_other_user)
-	elif (message.text == "выход"):
+	elif (message.text == "Выход"):
 		bot.send_message(message.chat.id, "Выберите, что хотите сделать дальше: ")
 
 		buttonUser = types.ReplyKeyboardMarkup()
