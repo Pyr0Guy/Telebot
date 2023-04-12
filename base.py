@@ -11,25 +11,30 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		description TEXT DEFAULT "Нет информации"
 		)""")
 
+
 	def registerUser(Userid, Name, Group, Progress=0):
 		params = (Userid, Name, Group, Progress, None)
 		cur.execute("INSERT INTO users VALUES (?,?,?,?,?)", params)
 		return Userid
 
+
 	def addDescription(Text, Userid):
 		params = (Text, Userid)
 		cur.execute("UPDATE users SET description=? WHERE userid=?", params)
+
 
 	def showUsers():
 		cur.execute("SELECT name, userid, group_, description FROM users")
 		result = cur.fetchall()
 		return result
 
+
 	def vabalabda(id):
 		params = (id)
 		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", [params])
 		result = cur.fetchall()
 		return result
+
 
 	def getIds():
 		cur.execute("SELECT userid FROM users")
@@ -64,29 +69,6 @@ def showUsersDescription(name):
 		
 	"""
 
-'''
-	def showUsersGroup(name):
-		params = (name)
-		cur.execute("SELECT group_ FROM users WHERE name = ?", [params])
-		result = cur.fetchall()
-		return return f"""
-		Имя: {name}
-		
-	"""
-	
-	def showUsersDescription(name):
-		params = (name)
-		cur.execute("SELECT description FROM users WHERE name = ?", [params])
-		result = cur.fetchall()
-		return f"""
-		Имя: {name}
-		
-	"""
-	
-	def updateProgress(Userid):
-		params = (Userid)
-		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)
-'''
 
 registerUser(2, "boobs", "man")
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
