@@ -143,16 +143,15 @@ def user_answer2(message):
 def settings(message):
 	if(message.text == "Изменить информацию о себе"):
 		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
-		bot.register_next_step_handler(msg, settings3)
+		bot.register_next_step_handler(msg, settings2)
 	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
 
-def settings2(message):
+def settings2(message, ):
 	global a
 	a = message.text
 	if (vabalabda(a) == [(1,)]): 
-		msg = bot.send_message(message.chat.id, "Доступ получен")
-		#Хуй
+		msg = bot.send_message(message.chat.id, "Введите новое описание: ")
 		name = message.text
 		addDescription(name, a)
 		print(addDescription(name, a))
