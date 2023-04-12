@@ -38,39 +38,50 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		res = cur.fetchall()
 		for i in range(len(res)):
 			ids.append(res[i][0])
-		return ids
-	
-	def showUsersNAME(name):
+		return ids	
+
+
+def showUsersGroup(name):
 		params = (name)
-		cur.execute("SELECT name FROM users WHERE name = ?", params)
+		cur.execute("SELECT group_ FROM users WHERE name = ?", [params])
 		result = cur.fetchall()
-		return result
-	
+		return f"""
+		Группа: {result[0][0]}
+		
+	"""
+
+def showUsersDescription(name):
+		params = (name)
+		cur.execute("SELECT description FROM users WHERE name = ?", [params])
+		result = cur.fetchall()
+		return f"""
+		Описание: {result[0][0]}
+		
+	"""
+
+'''
 	def showUsersGroup(name):
 		params = (name)
-		cur.execute("SELECT group_ FROM users WHERE name = ?", params)
+		cur.execute("SELECT group_ FROM users WHERE name = ?", [params])
 		result = cur.fetchall()
-		return result
+		return return f"""
+		Имя: {name}
+		
+	"""
 	
 	def showUsersDescription(name):
 		params = (name)
-		cur.execute("SELECT description FROM users WHERE name = ?", params)
-		result = cur.fetchall()
-		return result
-	
-	def updateProgress(Userid):
-		params = (Userid)
-		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)
-
-	def showUsersNAME(name):
-		params = (name)
-		cur.execute("SELECT name, group_, description FROM users WHERE name = ?", [params])
+		cur.execute("SELECT description FROM users WHERE name = ?", [params])
 		result = cur.fetchall()
 		return f"""
 		Имя: {name}
 		
 	"""
-
+	
+	def updateProgress(Userid):
+		params = (Userid)
+		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)
+'''
 
 registerUser(2, "boobs", "man")
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
