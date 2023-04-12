@@ -15,7 +15,7 @@ inAdmin = False
 
 #При вводе команды старт отображать кнопки
 @bot.message_handler(commands=["start"])
-def start(message):
+async def start(message):
 	#Сами кнопки
 	buttonLogin = types.ReplyKeyboardMarkup()
 	buttonLogin.add(types.KeyboardButton('Начать как сотрудник'), types.KeyboardButton('Начать как администратор'))
@@ -25,7 +25,7 @@ def start(message):
 	bot.register_next_step_handler(msg, user_answer)
 
 #Получаем ответ от чувачка
-def user_answer(message):
+async def user_answer(message):
 	if(message.text == "Начать как администратор"):
 		msg = bot.send_message(message.chat.id, adminButton())
 		bot.register_next_step_handler(msg, admin_reg)
@@ -37,7 +37,7 @@ def user_answer(message):
 		bot.register_next_step_handler(msg, start)
 
 #Вводим крутой пароль
-def admin_reg(message):
+async def admin_reg(message):
 	try:
 		password = message.text
 
@@ -63,7 +63,7 @@ def admin_reg(message):
 #	msg = bot.send_message(message.chat.id, "Добро пожаловать", reply_markup=buttonAdmin)
 #	bot.register_next_step_handler(msg, admin_answer)
 
-def admin_answer(message):
+async def admin_answer(message):
 	if(message.text == "Добавить сотрудника"):
 		msg = bot.send_message(message.chat.id, "Введите имя")
 		bot.register_next_step_handler(msg, admin_addUser)
@@ -74,14 +74,14 @@ def admin_answer(message):
 		msg = bot.send_message(message.chat.id, "Пока")
 		bot.register_next_step_handler(msg, start)
 
-def admin_addUser(message):
+async def admin_addUser(message):
 	name = message.text
 	sus = addUser(name, "employee")
 	msg = bot.reply_to(message, sus)
 	start(message)
 	#bot.register_next_step_handler(msg, admin_tools)
 
-def admin_showUsers(message):
+async def admin_showUsers(message):
 	users = showUsers()
 	print(users)
 	for i in range(len(showUsers())):
@@ -92,7 +92,7 @@ def admin_showUsers(message):
 #	bot.register_next_step_handler(msg, admin_reg)
 
 #Инструменты пользователя
-def user_reg(message):
+async def user_reg(message):
 	#try:
 	#msg = bot.send_message(message.chat.id, "Введите персональный код: ")
 	print(vabalabda(message.text))
@@ -119,7 +119,7 @@ def user_reg(message):
 	#msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать: ", reply_markup=buttonUser)
 	#bot.register_next_step_handler(msg, user_answer2)
 
-def user_answer2(message):
+async def user_answer2(message):
 	if(message.text == "Обучение профессии"):
 		print("Обучение профессии")
 		msg = bot.send_message(message.chat.id, "Вот информация по вашей профессии:")
@@ -140,14 +140,14 @@ def user_answer2(message):
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
-def settings(message):
+async def settings(message):
 	if(message.text == "Изменить информацию о себе"):
 		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
 		bot.register_next_step_handler(msg, settings2)
 	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
 
-def settings2(message, ):
+async def settings2(message, ):
 	a = message.text
 	if (vabalabda(a) == [(1,)]): 
 		msg = bot.send_message(message.chat.id, "Введите новое описание: ")
@@ -156,26 +156,26 @@ def settings2(message, ):
 		bot.send_message(message.chat.id, "Неверный персональный код ")
 		bot.register_next_step_handler(msg, settings)
 
-def settings3(message, a):
+async def settings3(message, a):
 	msg = bot.send_message(message.chat.id, "Введите новое описание: ")
 	name = message.text
 	addDescription(name, a)
 	print(addDescription(name, a))
 	bot.register_next_step_handler(msg, settings)
 
-def user_GuideBook(message):
+async def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
 	bot.register_next_step_handler(msg, user_GuideBook2)
 
-def user_GuideBook2(message):
+async def user_GuideBook2(message):
 	msg = bot.send_message(message.chat.id, userWork2())
 	bot.register_next_step_handler(msg, user_reg)
 
-def user_GuideBook3(message):
+async def user_GuideBook3(message):
 	msg = bot.send_message(message.chat.id, userText3())
 	bot.register_next_step_handler(msg, start)
 
-def user_showUsers(message):
+async def user_showUsers(message):
 	users = showUsers()
 	print(users)
 	for i in range(len(showUsers())):
@@ -183,26 +183,26 @@ def user_showUsers(message):
 
 	bot.register_next_step_handler(msg, user_question)
 
-def user_showСompan(message):
+async def user_showСompan(message):
 	msg = bot.send_message(message.chat.id, userComp())
 	bot.register_next_step_handler(msg, user_reg)
 	msg = bot.send_message(message.chat.id, companyInfo())
 	bot.register_next_step_handler(msg, start)
 
-def user_question(message):
+async def user_question(message):
 	buttonUser = types.ReplyKeyboardMarkup()
 	buttonUser.add(types.KeyboardButton('Подробная информация о пользователе'), types.KeyboardButton('Выход')) 
 	msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonUser)
 	bot.register_next_step_handler(msg, user_check)
 
-def user_check(message):
+async def user_check(message):
 	if message.text == "Подробная информация о пользователе":
 		msg = bot.send_message(message.chat.id, "Введите имя пользователя о котором хотите получить информацию: ")
 		bot.register_next_step_handler(msg, user_check_other_user)
 	else:
 		bot.register_next_step_handler(msg, user_reg)
 
-def user_check_other_user(message):
+async def user_check_other_user(message):
 	name = message.text
 	msg = bot.send_message(message.chat.id, showUsersNAME(name))
 	bot.register_next_step_handler(msg, user_reg)
