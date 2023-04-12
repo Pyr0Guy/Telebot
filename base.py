@@ -42,14 +42,22 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 	
 	def showUsersNAME(name):
 		params = (name)
-		cur.execute("SELECT name, group_, description FROM users WHERE name = ?", params)
+		cur.execute("SELECT name FROM users WHERE name = ?", params)
 		result = cur.fetchall()
-		return f"""
-		Пользователь зарегестрирован
-		Имя: {name}
-
-	"""
-
+		return result
+	
+	def showUsersGroup(name):
+		params = (name)
+		cur.execute("SELECT group_ FROM users WHERE name = ?", params)
+		result = cur.fetchall()
+		return result
+	
+	def showUsersDescription(name):
+		params = (name)
+		cur.execute("SELECT description FROM users WHERE name = ?", params)
+		result = cur.fetchall()
+		return result
+	
 	def updateProgress(Userid):
 		params = (Userid)
 		cur.execute("UPDATE users SET progress = progress + 1 WHERE userid=?", params)

@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda, showUsersNAME, addDescription
+from base import registerUser, showUsers, vabalabda, showUsersNAME, showUsersGroup, showUsersDescription , addDescription
 from user import userComp, userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
@@ -157,11 +157,11 @@ def settings2(message, ):
 		bot.register_next_step_handler(msg, settings)
 
 def settings3(message, a):
-	msg = bot.send_message(message.chat.id, "Введите новое описание: ")
+	#msg = bot.send_message(message.chat.id, "Введите новое описание: ")
 	name = message.text
 	addDescription(name, a)
 	print(addDescription(name, a))
-	bot.register_next_step_handler(msg, settings)
+	#bot.register_next_step_handler(msg, settings)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
@@ -205,8 +205,20 @@ def user_check(message):
 def user_check_other_user(message):
 	name = message.text
 	msg = bot.send_message(message.chat.id, showUsersNAME(name))
+	bot.register_next_step_handler(msg, user_check_other_user2)
+
+def user_check_other_user2(message):
+	msg = bot.send_message(message.chat.id, showUsersGroup(name))
+	bot.register_next_step_handler(msg, user_check_other_user3)
+
+def user_check_other_user3(message):
+	msg = bot.send_message(message.chat.id, showUsersDescription(name))
 	bot.register_next_step_handler(msg, user_reg)
 
+'''
+msg = bot.send_message(message.chat.id, showUsersGroup(name))
+msg = bot.send_message(message.chat.id, showUsersDescription(name))
+'''
 bot.enable_save_next_step_handlers(delay=12)
 bot.load_next_step_handlers()
 #Врубаем бота
