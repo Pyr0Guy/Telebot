@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import registerUser, showUsers, vabalabda, showUsersGroup, addDescription #showUsersDescription
+from base import registerUser, showUsers, vabalabda, showUsersGroup, addDescription, showUsersDescription
 from user import userComp, userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
@@ -145,7 +145,8 @@ def settings(message):
 		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
 		bot.register_next_step_handler(msg, settings2)
 	elif(message.text == "Выход"):
-		bot.register_next_step_handler(msg, user_answer2)
+		fsg = bot.send_message(message.chat.id, "ff ")
+		bot.register_next_step_handler(fsg, user_answer2)
 
 def settings2(message, ):
 	a = message.text
@@ -153,15 +154,15 @@ def settings2(message, ):
 		msg = bot.send_message(message.chat.id, "Введите новое описание: ")
 		bot.register_next_step_handler(msg, settings3, a)
 	else:
-		bot.send_message(message.chat.id, "Неверный персональный код ")
-		bot.register_next_step_handler(msg, settings)
+		ssg = bot.send_message(message.chat.id, "Неверный персональный код ")
+		bot.register_next_step_handler(ssg, settings)
 
 def settings3(message, a):
 	name = message.text
 	addDescription(name, a)
 	print(addDescription(name, a))
-	msg = bot.send_message(message.chat.id, "Описание успешно сохранено")
-	bot.register_next_step_handler(msg, settings)
+	uug = bot.send_message(message.chat.id, "Описание успешно сохранено")
+	bot.register_next_step_handler(uug, settings)
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
@@ -204,7 +205,9 @@ def user_check(message):
 
 def user_check_other_user(message):
 	name = message.text
-	msg = bot.send_message(message.chat.id, showUsersGroup(name))
+	bot.send_message(message.chat.id, "Имя:", name)
+	bot.send_message(message.chat.id, showUsersGroup(name))
+	msg = bot.send_message(message.chat.id, showUsersDescription(name))
 	bot.register_next_step_handler(msg, user_reg)
 
 '''
