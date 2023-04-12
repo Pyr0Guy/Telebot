@@ -152,6 +152,7 @@ def settings2(message):
 	a = message.text
 	if (vabalabda(a) == [(1,)]): 
 		msg = bot.send_message(message.chat.id, "Доступ получен")
+		#Хуй
 		name = message.text
 		addDescription(name, a)
 		print(addDescription(name, a))
