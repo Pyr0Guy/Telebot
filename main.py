@@ -94,7 +94,7 @@ def admin_showUsers(message):
 #Инструменты пользователя
 def user_reg(message):
 	#try:
-	msg = bot.send_message(message.chat.id, "Введите персональный код: ")
+	#msg = bot.send_message(message.chat.id, "Введите персональный код: ")
 	print(vabalabda(message.text))
 	a = message.text
 	if vabalabda(a) == [(1,)]: 
@@ -140,24 +140,23 @@ def user_answer2(message):
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
-
 def settings(message):
 	if(message.text == "Изменить информацию о себе"):
 		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
-		bot.register_next_step_handler(msg, settings2)
+		bot.register_next_step_handler(msg, settings3)
 	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
 
 def settings2(message):
+	global a
 	a = message.text
 	if (vabalabda(a) == [(1,)]): 
-		msg = bot.send_message(message.chat.id, "Теперь введите текст для описания: ")
+		msg = bot.send_message(message.chat.id, "Доступ получен")
 		name = message.text
 		addDescription(name, a)
 		print(addDescription(name, a))
-		print (name)
-		bot.register_next_step_handler(msg, settings)	
-	elif(vabalabda(a) == [(0,)]):
+		bot.register_next_step_handler(msg, settings)
+	else:
 		bot.send_message(message.chat.id, "Неверный персональный код ")
 		bot.register_next_step_handler(msg, settings)
 
