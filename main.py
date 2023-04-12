@@ -205,9 +205,9 @@ def user_check(message):
 
 def user_check_other_user(message):
 	name = message.text
-	bot.send_message(message.chat.id, "Имя:", name)
+	#bot.send_message(message.chat.id, "Имя:", name)                  СТРОЧКА ГОВНА ЕБАНОГО НЕ РАБОТАЕТ НИХУЯ
 	bot.send_message(message.chat.id, showUsersGroup(name))
-	msg = bot.send_message(message.chat.id, showUsersDescription(name))
+	bot.send_message(message.chat.id, showUsersDescription(name))
 	bot.register_next_step_handler(msg, user_reg)
 
 '''
