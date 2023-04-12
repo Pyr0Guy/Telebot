@@ -28,11 +28,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 
 	def vabalabda(id):
 		params = (id)
-#<<<<<<< HEAD
-#		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", (params,))
-#=======
 		cur.execute("SELECT count(userid) FROM users WHERE userid = ?", [params])
-#>>>>>>> c91899cc9d8922ad01a6115be6b8df35e81559ab
 		result = cur.fetchall()
 		return result
 

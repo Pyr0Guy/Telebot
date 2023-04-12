@@ -3,11 +3,8 @@ import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
 from base import registerUser, showUsers, vabalabda, showUsersNAME, addDescription
-from admin import addUser
 from user import userComp, userWork1, userWork2
-from base import registerUser, showUsers, vabalabda, showUsersNAME
 from admin import addUser, companyInfo, userText1, userText2, userText3
-from user import showGuideBook
 
 #Токен
 
@@ -96,11 +93,11 @@ def admin_showUsers(message):
 
 #Инструменты пользователя
 def user_reg(message):
-	users = showUsers()
 	#try:
 	msg = bot.send_message(message.chat.id, "Введите персональный код: ")
 	print(vabalabda(message.text))
-	if vabalabda(message.text) == [(1,)]: 
+	a = message.text
+	if vabalabda(a) == [(1,)]: 
 		msg = bot.send_message(message.chat.id, "Доступ получен")
 		buttonUser = types.ReplyKeyboardMarkup()
 		buttonUser.add(types.KeyboardButton('Обучение профессии'), types.KeyboardButton('Посмотреть коллег'), types.KeyboardButton('О компании'), types.KeyboardButton('Настройки'), types.KeyboardButton('Выход')) 
@@ -110,6 +107,7 @@ def user_reg(message):
 	else:
 		bot.send_message(message.chat.id, "Неверный персональный код ")
 		start(message)
+	
 
 	#except Exception as e:
 	#	bot.reply_to(message, 'Не сработало')
@@ -142,18 +140,25 @@ def user_answer2(message):
 		msg = bot.send_message(message.chat.id, "bb")
 		bot.register_next_step_handler(msg, start)
 
+
 def settings(message):
 	if(message.text == "Изменить информацию о себе"):
-		msg = bot.send_message(message.chat.id, "Впешите свой id:")
-		id = message.text
-		msg = bot.send_message(message.chat.id, "Теперь введите новый текст:")
-		text = message.text
-		addDescription(text, id)
-		msg = bot.send_message(message.chat.id, "Текст успешно введен")
-		bot.register_next_step_handler(msg, user_answer2)
+		msg = bot.send_message(message.chat.id, "Введите персональный код для подтверждения: ")
+		a = message.text
+
+		if (vabalabda(a) == [(1,)]): 
+			msg = bot.send_message(message.chat.id, "Теперь введите текст для описания: ")
+			name = message.text
+			addDescription(name, a)
+			print(addDescription(name, a))
+			bot.register_next_step_handler(msg, settings)	
+		elif(vabalabda(a) == [(0,)]):
+			bot.send_message(message.chat.id, "Неверный персональный код ")
+			bot.register_next_step_handler(msg, settings)
+		
 	elif(message.text == "Выход"):
 		bot.register_next_step_handler(msg, user_answer2)
-	
+
 
 def user_GuideBook(message):
 	msg = bot.send_message(message.chat.id, userWork1())
