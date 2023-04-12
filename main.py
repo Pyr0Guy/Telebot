@@ -2,7 +2,7 @@ import os
 import telebot as tb
 from telebot import types
 from choice import adminButton, employeeButton, adminAuth
-from base import showUsers, vabalabda, showUsersName, showUsersGroup, addDescription, showUsersDescription
+from base import showUsers, vabalabda, showUsersName, showUsersGroup, addDescription, showUsersDescription, showUsersNameAdmin, showUsersIdAdmin, showUsersGroupAdmin, showUsersDescriptionAdmin
 from user import userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
@@ -63,7 +63,7 @@ def admin_answer(message):
 		bot.register_next_step_handler(msg, admin_addUser)
 	elif(message.text == "Проверить сотрудников"):
 		msg = bot.send_message(message.chat.id, "Вот")
-		bot.register_next_step_handler(msg, admin_showUsers)
+		admin_showUsers(message)
 	elif(message.text == "Выход"):
 		start(message)
 	else:
@@ -79,19 +79,30 @@ def admin_addUser(message):
 	name = message.text
 	sus = addUser(name, "employee")
 	msg = bot.reply_to(message, sus)
-	start(message)
-	#bot.register_next_step_handler(msg, admin_tools)
 
-	
+	buttonAdmin = types.ReplyKeyboardMarkup()
+	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
+
+	msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonAdmin)
+	bot.register_next_step_handler(msg, admin_answer)
+
+
 def admin_showUsers(message):
 	users = showUsers()
 	print(users)
-	for i in range(len(showUsers())):
-		for j in range(3):
-				msg = bot.send_message(message.chat.id, users[i][j])
 
-	start(message)
-	bot.register_next_step_handler(msg, admin_reg)
+	for i in range(len(showUsers())):
+		bot.send_message(message.chat.id, showUsersNameAdmin(i))
+		bot.send_message(message.chat.id, showUsersIdAdmin(i))
+		bot.send_message(message.chat.id, showUsersGroupAdmin(i))
+		bot.send_message(message.chat.id, showUsersDescriptionAdmin(i))
+		bot.send_message(message.chat.id, "########################################")
+
+	buttonAdmin = types.ReplyKeyboardMarkup()
+	buttonAdmin.add(types.KeyboardButton('Добавить сотрудника'), types.KeyboardButton('Проверить сотрудников'), types.KeyboardButton('Выход'))
+
+	msg = bot.send_message(message.chat.id, "Выберите, что хотите сделать дальше: ", reply_markup=buttonAdmin)
+	bot.register_next_step_handler(msg, admin_answer)
 
 
 #Функции пользователя

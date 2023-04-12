@@ -28,6 +28,34 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		result = cur.fetchall()
 		return result
 
+	def showUsersNameAdmin(i):
+		cur.execute("SELECT name FROM users ")
+		result = cur.fetchall()
+		return f"""
+		Имя: {result[i][0]}
+		"""
+	
+	def showUsersIdAdmin(i):
+		cur.execute("SELECT userid FROM users ")
+		result = cur.fetchall()
+		return f"""
+		Id: {result[i][0]}
+		"""
+
+	def showUsersGroupAdmin(i):
+		cur.execute("SELECT group_ FROM users ")
+		result = cur.fetchall()
+		return f"""
+		Группа: {result[i][0]}
+		"""
+
+	def showUsersDescriptionAdmin(i):
+		cur.execute("SELECT description FROM users ")
+		result = cur.fetchall()
+		return f"""
+		Описание: {result[i][0]}
+		"""
+
 
 	def vabalabda(id):
 		params = (id)
@@ -70,7 +98,7 @@ def showUsersDescription(name):
 	"""
 
 
-registerUser(2, "boobs", "man")
+registerUser(222, "Енот", "Главный администратор")
 #addDescription("fdsfdsfdsfdshhjkfghiuvhjkdvnuie", 12)
 #print(showUsers())
 #print(getIds())
