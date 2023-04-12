@@ -8,7 +8,7 @@ with sq.connect("Base.db", check_same_thread=False) as con:
 		name TEXT NOT NULL,
 		group_ TEXT NOT NULL,
 		progress INTEGER DEFAULT 0,
-		description TEXT NOT NULL
+		description TEXT DEFAULT "Нет информации"
 		)""")
 
 
