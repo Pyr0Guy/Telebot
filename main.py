@@ -7,7 +7,10 @@ from user import userWork1, userWork2
 from admin import addUser, companyInfo, userText1, userText2, userText3
 
 #Токен
-bot = tb.TeleBot("5973367934:AAH5QSC-UkZDrueAg3p0a9OoowuONWcaUko")
+with open(".env", "r") as f:
+    token = f.read()
+
+bot = tb.TeleBot(token)
 
 inAdmin = False
 
